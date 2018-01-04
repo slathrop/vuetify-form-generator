@@ -30,7 +30,25 @@
 		      @blur="onBlur"
 		      @change="onChange"
 		      @focus="onFocus"
-		      @input="onInput"              
+		      @input="onInput"
+		    ></v-text-field>
+		</div>
+
+		<div v-else-if="field.type == 'number'">
+			 <v-text-field
+		      v-model="localValue"
+		      :label="field.label"
+		      :required="field.required"
+		      :readonly="field.readonly"
+		      :disabled="field.disabled"
+		      :placeholder="field.placeholder"
+		      :append-icon="field.passwordVisible ? 'visibility_off' : 'visibility'"
+              :append-icon-cb="appendPasswordIconCheckbox()"
+              :type="field.passwordVisible ? 'text' : 'password'"
+		      @blur="onBlur"
+		      @change="onChange"
+		      @focus="onFocus"
+		      @input="onInput"
 		    ></v-text-field>
 		</div>
 
@@ -71,7 +89,7 @@
 		      @blur="onBlur"
 		      @change="onChange"
 		      @focus="onFocus"
-		      @input="onInput"		      
+		      @input="onInput"
 		    ></v-text-field>
 		</div>
 
@@ -88,7 +106,7 @@
 		      @blur="onBlur"
 		      @change="onChange"
 		      @focus="onFocus"
-		      @input="onInput"			  
+		      @input="onInput"
 		    ></v-text-field>
 
 
@@ -96,7 +114,7 @@
 		    	<strong>The {{field.type}} type is not yet implemented.</strong> <br>
 		   		{{field}}
 		    </v-alert>
-		    
+
 		</div>
 	</div>
 </template>
@@ -137,7 +155,7 @@
 			onInput: function(){
 				this.$emit('input')
 			},
-			
+
 			appendPasswordIconCheckbox(){
 				return () => this.field.passwordVisible = !this.field.passwordVisible
 			}

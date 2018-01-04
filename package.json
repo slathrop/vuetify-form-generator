@@ -25,7 +25,8 @@
   "homepage": "https://github.com/AndreasFurster/vuetify-form-generator#readme",
   "dependencies": {
     "vue": "^2.5.3",
-    "vuetify": "^0.17.4"
+    "vuetify": "^0.17.4",
+    "vee-validate": "^2.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
