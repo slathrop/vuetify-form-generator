@@ -4,7 +4,7 @@
             <v-card>
                 <v-card-title>{{section.label}}</v-card-title>
                 <div v-for="field in section.fields">
-                    <v-form-generator-field :field="field" :value="model[field.model]"/>
+                    <v-form-generator-field :field="field" :value="model[field.model]" @upd="onInput"/>
                 </div>
             </v-card>
         </div>
@@ -16,7 +16,7 @@
     name: 'v-form-generator',
     props: {
       'model': Object,
-      'schema': Object
+      'schema': Array
     },
     components: {
       'v-form-generator-field': require('./form-field.vue').default
@@ -37,8 +37,9 @@
       onFocus: function () {
         console.info('focus')
       },
-      onInput: function () {
-        console.info('input')
+      onInput: function (value, fieldName) {
+        this.model[fieldName] =  value
+        this.$emit('update:model', this.model)
       },
     }
   }

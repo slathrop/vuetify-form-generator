@@ -221,7 +221,7 @@
         this.$emit('focus')
       },
       onInput: function () {
-        this.$emit('input')
+        this.$emit('upd', this.localValue, this.field.name)
       },
       formatDate (date) {
         if (!date) {
