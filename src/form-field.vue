@@ -12,14 +12,19 @@
                     :readonly="field.editable"
                     :disabled="field.disabled"
                     :placeholder="field.placeholder"
+                    :error-messages="errors.collect(field.name)"
+                    :name="field.name"
+                    :id="field.name"
+                    v-validate="field.required && 'required'"
+                    :data-vv-delay="delay"
+                    :data-vv-name="field.name"
                     @blur="onBlur"
                     @change="onChange"
                     @focus="onFocus"
                     @input="onInput"
             />
         </div>
-        <div v-else-if="field.field_id === 'multi_line'
-					">
+        <div v-else-if="field.field_id === 'multi_line'">
             <v-text-field
                     v-model="localValue"
                     :label="field.label"
@@ -36,13 +41,18 @@
         </div>
         <div v-else-if="field.field_id === 'email'">
             <v-text-field
-                    v-model="localValue"
+                    v-model.lazy="localValue"
                     :label="field.label"
                     :required="field.required"
                     :readonly="field.readonly"
                     :disabled="field.disabled"
                     :placeholder="field.placeholder"
-                    :rules="validationRules.email"
+                    :error-messages="errors.collect(field.name)"
+                    :name="field.name"
+                    :id="field.name"
+                    v-validate="field.required && 'required|' + 'email'"
+                    :data-vv-delay="delay"
+                    :data-vv-name="field.name"
                     @blur="onBlur"
                     @change="onChange"
                     @focus="onFocus"
@@ -50,42 +60,7 @@
             />
         </div>
         <div v-else-if="field.field_id === 'date'">
-            xxx
-            <v-menu
-                    lazy
-                    :close-on-content-click="true"
-                    v-model="menu"
-                    transition="scale-transition"
-                    offset-y
-                    full-width
-                    :nudge-right="40"
-                    max-width="290px"
-                    min-width="290px"
-            >
-                <v-text-field
-                        v-model="dateFormatted"
-                        :label="field.label"
-                        slot="activator"
-                        :required="field.required"
-                        :readonly="field.readonly"
-                        :disabled="field.disabled"
-                        :placeholder="field.placeholder"
-                        @blur="localValue = parseDate(dateFormatted)"
-                        @change="onChange"
-                        @focus="onFocus"
-                        @input="onInput"
-                />
-                <v-date-picker v-model="localValue" @input="dateFormatted = formatDate($event)" no-title scrollable
-                               actions>
-                    <template slot-scope="{ save, cancel }">
-                        <v-card-actions>
-                            <v-spacer/>
-                            <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-                            <v-btn flat color="primary" @click="save">OK</v-btn>
-                        </v-card-actions>
-                    </template>
-                </v-date-picker>
-            </v-menu>
+
         </div>
         <div v-else-if="field.field_id === 'choice' || field.field_id === 'state'">
             <v-select
@@ -130,34 +105,6 @@
             />
         </div>
 
-        <div v-else-if="field.field_id == 'number'">
-            <v-text-field
-                    v-model="localValue"
-                    :label="field.label"
-                    :required="field.required"
-                    :readonly="field.readonly"
-                    :disabled="field.disabled"
-                    :placeholder="field.placeholder"
-                    :append-icon="field.passwordVisible ? 'visibility_off' : 'visibility'"
-                    :append-icon-cb="appendPasswordIconCheckbox()"
-                    :type="field.passwordVisible ? 'text' : 'password'"
-                    @blur="onBlur"
-                    @change="onChange"
-                    @focus="onFocus"
-                    @input="onInput"
-            ></v-text-field>
-        </div>
-
-
-        <div v-else-if="field.type == 'checkbox'">
-            <v-checkbox
-                    v-model="localValue"
-                    :label="field.label"
-                    :required="field.required"
-                    :disabled="field.disabled"
-            ></v-checkbox>
-        </div>
-
 
         <div v-else>
             <v-text-field
@@ -187,6 +134,7 @@
 
 <script>
   export default {
+    inject: ['$validator'],
     name: 'v-form-generator-field',
     props: {
       field: Object,
@@ -196,15 +144,8 @@
       return {
         localValue: this.value,
         menu: false,
-        dateFormatted: null,
-        validationRules: {
-          email: [
-            (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || this.validationErrorMessages.emailInvalid
-          ]
-        },
-        validationErrorMessages: {
-          'emailInvalid': 'E-mail must be valid'
-        }
+        delay: 600,
+        dateFormatted: null
       }
     },
     created: function () {
@@ -237,7 +178,6 @@
         const [month, day, year] = date.split('/')
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
       },
-
       appendPasswordIconCheckbox () {
         return () => this.field.passwordVisible = !this.field.passwordVisible
       }

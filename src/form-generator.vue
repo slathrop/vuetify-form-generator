@@ -16,8 +16,10 @@
     name: 'v-form-generator',
     props: {
       'model': Object,
-      'schema': Array
+      'schema': Array,
+      'valid': Boolean
     },
+    $_veeValidate: { validator: 'new' },
     components: {
       'v-form-generator-field': require('./form-field.vue').default
     },
@@ -25,7 +27,9 @@
       return {}
     },
     created: function () {
-      // On load
+      this.$watch(() => this.$invalid(), (value) => {
+        this.$emit('update:valid', !value)
+      });
     },
     methods: {
       onBlur: function () {
@@ -38,7 +42,7 @@
         console.info('focus')
       },
       onInput: function (value, fieldName) {
-        this.model[fieldName] =  value
+        this.model[fieldName] = value
         this.$emit('update:model', this.model)
       },
     }
