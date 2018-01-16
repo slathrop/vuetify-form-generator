@@ -23,8 +23,6 @@
       field: Object,
       value: null
     },
-    data () {
-    },
     methods: {
     }
   }
