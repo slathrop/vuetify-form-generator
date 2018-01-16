@@ -4,22 +4,35 @@
             :items="field.choices"
             item-text="label"
             item-value="value"
+            :combobox="combobox"
+            :chips="combobox"
             :label="field.label"
             :required="field.required"
             :readonly="field.readonly"
             :disabled="field.disabled"
-            bottom
-
+            v-validate="field.required && 'required'"
+            :error-messages="errors.collect(field.name)"
+            :name="field.name"
+            :id="field.name"
+            :data-vv-delay="delay"
+            :data-vv-name="field.name"
+            @blur="onBlur"
+            @change="onChange"
+            @focus="onFocus"
+            @input="onInput"
     />
 </template>
 <script>
   import abstractField from "../abstractField"
 
   export default {
+    inject: ['$validator'],
     mixins: [abstractField],
-    fieldTypes: ['choice', 'state',],
+    fieldTypes: ['choice', 'state', 'combobox'],
     data () {
-      return {}
+      return {
+        combobox: this.field.field_id === 'combobox'
+      }
     },
     methods: {}
   }
