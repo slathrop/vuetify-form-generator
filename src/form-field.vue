@@ -1,7 +1,6 @@
 <template>
     <div>
-        <component :is="field.field_id"
-                       :field="field"/>
+        <component :is="field.field_id" :field="field" v-on:upd="onUpd"/>
     </div>
 </template>
 
@@ -24,6 +23,9 @@
       value: null
     },
     methods: {
+      onUpd: function (value, fieldName) {
+        this.$emit('upd', value, fieldName)
+      },
     }
   }
 </script>

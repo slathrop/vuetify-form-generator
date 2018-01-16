@@ -4,7 +4,7 @@
             <v-card>
                 <v-card-title>{{section.label}}</v-card-title>
                 <div v-for="field in section.fields">
-                    <v-form-generator-field :field="field" :value="model[field.model]" @upd="onInput"/>
+                    <v-form-generator-field :field="field" :value="model[field.model]" @upd="onInput" v-on:increment="onInput"/>
                 </div>
             </v-card>
         </div>
@@ -29,7 +29,7 @@
     created: function () {
       this.$watch(() => this.$invalid(), (value) => {
         this.$emit('update:valid', !value)
-      });
+      })
     },
     methods: {
       onBlur: function () {
