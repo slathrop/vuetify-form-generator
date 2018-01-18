@@ -1,10 +1,8 @@
 <template>
     <div>
         <div v-if="mode === 'graph'">
-            <vueSignature ref="signature"/>
+            <vueSignature ref="signature" :sigOption="option"/>
             <a @click="mode = 'text'">Prefer to type your signature? Click here</a>
-
-            <v-btn @click="save()">save</v-btn>
             <v-btn @click="clear()">clear</v-btn>
         </div>
         <div v-else="mode === 'text'">
@@ -53,7 +51,12 @@
     },
     data () {
       return {
-        mode: 'graph'
+        mode: 'graph',
+        option: {
+            onEnd: () => (
+                this.save()
+            )
+        }
       }
     },
     methods: {
