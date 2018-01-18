@@ -13,6 +13,7 @@
             v-validate="validate"
             :data-vv-delay="delay"
             :data-vv-name="field.name"
+            :mask="mask"
             @blur="onBlur"
             @change="onChange"
             @focus="onFocus"
@@ -28,15 +29,23 @@
     fieldTypes: ['single_line', 'multi_line', 'unit_field', 'ssn', 'phone', 'email'],
     data () {
       let validate = ''
+      let mask = null
       if (this.field.required) {
         validate = 'required|'
       }
       if (this.field.field_id === 'email') {
         validate += 'email|'
       }
+      if (this.field.field_id === 'ssn') {
+        mask = 'social'
+      }
+      if (this.field.field_id === 'phone') {
+        mask = 'phone'
+      }
 
       return {
-        validate: validate
+        validate: validate,
+        mask: mask
       }
     },
     methods: {
