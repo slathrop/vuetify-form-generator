@@ -13,7 +13,7 @@
                         </span>
                     </div>
                     <div v-else-if="field.field_id === 'text_display'">
-                        {{field.label}}
+                       <span v-html="field.label"></span>
                     </div>
                     <div v-else-if="['choice', 'state', 'combobox'].indexOf(field.field_id) !== -1">
                         {{getChoiceValue(field)}}
