@@ -36,7 +36,6 @@
     props: {
       application: Object
     },
-
     data () {
       return {}
     },
