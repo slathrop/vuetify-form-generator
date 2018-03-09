@@ -1,7 +1,8 @@
 <template>
     <div>
         <div v-if="mode === 'graph'">
-            <vueSignature ref="signature" :sigOption="option"/>
+            <vue-signature ref="signature" :sigOption="option"></vue-signature>
+            <!-- TODO https://github.com/WangShayne/vue-signature/issues/8 -->
             <a @click="mode = 'text'">Prefer to type your signature? Click here</a>
             <v-btn @click="clear()">clear</v-btn>
         </div>
@@ -26,17 +27,18 @@
     </div>
 </template>
 <style scoped>
-@font-face {
-    font-family: 'Quentin';
-    src: url('./../../assets/fonts/Quentin.woff2') format('woff2'),
+    @font-face {
+        font-family: 'Quentin';
+        src: url('./../../assets/fonts/Quentin.woff2') format('woff2'),
         url('./../../assets/fonts/Quentin.woff') format('woff');
-    font-weight: bold;
-    font-style: normal;
-}
-.signature-text {
-    font-family: Quentin, sans-serif;
-    font-size: 30px;
-}
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    .signature-text {
+        font-family: Quentin, sans-serif;
+        font-size: 30px;
+    }
 </style>
 
 <script>
@@ -47,15 +49,15 @@
     mixins: [abstractField],
     fieldTypes: ['signature'],
     components: {
-      'vueSignature': VueSignature
+      'vue-signature': VueSignature
     },
     data () {
       return {
         mode: 'graph',
         option: {
-            onEnd: () => (
-                this.save()
-            )
+          onEnd: () => (
+            this.save()
+          )
         }
       }
     },
