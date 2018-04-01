@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="section in application.form.sections">
+        <div v-for="section in form.sections">
             <v-card>
                 <v-card-title>{{section.label}}</v-card-title>
                 <div v-for="field in section.fields">
@@ -34,7 +34,7 @@
   export default {
     name: 'v-display-application',
     props: {
-      application: Object
+      form: Object
     },
     data () {
       return {}
