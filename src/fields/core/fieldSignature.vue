@@ -42,7 +42,7 @@
 
 <script>
   import abstractField from "../abstractField"
-  import VueSignature from 'vue-signature/src/lib/vue-signature'
+  import VueSignature from 'vue-signature'
 
   export default {
     mixins: [abstractField],
