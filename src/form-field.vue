@@ -1,6 +1,6 @@
 <template>
     <div>
-        <component :is="field.field_id" :field="field" v-on:upd="onUpd"/>
+        <component :is="field.field_id" :field="field" :value="field.value" v-on:upd="onUpd"/>
     </div>
 </template>
 
