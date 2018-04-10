@@ -9,11 +9,11 @@ module.exports = {
     filename: 'build.js'
   },
   resolve: {
-    extensions: ['.js', '.vue'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       'public': path.resolve(__dirname, './public')
-    }
+    },
+    extensions: ['.js', '.vue']
   },
   module: {
     rules: [{
